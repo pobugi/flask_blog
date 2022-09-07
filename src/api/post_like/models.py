@@ -16,11 +16,30 @@ class PostLike(db.Model):
     updated = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     @staticmethod
+    def liked_by_me(post):
+        post_like = PostLike.query.filter_by(post=post, owner=g.user).first()
+        if post_like:
+            return True
+        return False
+
+    @staticmethod
+    def get_by_post_and_owner(post_id, owner_id):
+        post_like = PostLike.query.filter_by(post_id=post_id, owner_id=owner_id).first()
+        return post_like
+
+    @staticmethod
     def create(post):
         post_like = PostLike(
             post=post, owner=g.user, created=datetime.now(), updated=datetime.now()
         )
         db.session.add(post_like)
+        db.session.commit()
+        return post_like
+
+    @staticmethod
+    def delete(id):
+        post_like = PostLike.query.get(id)
+        db.session.delete(post_like)
         db.session.commit()
         return post_like
 
