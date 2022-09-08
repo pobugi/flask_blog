@@ -6,10 +6,9 @@ from sqlalchemy import create_engine
 db = SQLAlchemy()
 
 
-def create_app():
+def create_app(app_settings=config.DevelopmentConfig):
     app = Flask(__name__)
 
-    app_settings = config.DevelopmentConfig
     app.config.from_object(app_settings)
 
     db.init_app(app)

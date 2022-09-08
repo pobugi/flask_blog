@@ -22,4 +22,4 @@ def create_post():
         title=data_dict.get("title"),
         description=data_dict.get("description"),
     )
-    return jsonify(Post.to_dict(blog_post))
+    return jsonify(Post.to_dict(blog_post)), 201
