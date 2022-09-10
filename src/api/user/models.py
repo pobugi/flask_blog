@@ -8,7 +8,6 @@ class User(db.Model):
     username = db.Column(db.String, nullable=False, unique=True)
     created = db.Column(db.DateTime, nullable=False)
     updated = db.Column(db.DateTime, nullable=False)
-    test_field = db.Column(db.Boolean, nullable=False, default=True)
     posts = db.relationship("Post", back_populates="owner")
     likes = db.relationship("PostLike", back_populates="owner")
     comments = db.relationship("PostComment", back_populates="owner")

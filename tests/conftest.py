@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 
 import config
 from src import create_app
+from tests.utils.db_utils import truncate_tables
 
 
 @pytest.fixture
@@ -19,6 +20,9 @@ def app():
 
     with app.app_context():
         db.create_all()
+
+    with app.test_client() as client:
+        truncate_tables(client)
 
     yield app
 
