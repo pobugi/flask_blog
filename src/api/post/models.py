@@ -21,6 +21,7 @@ class Post(db.Model):
     @property
     def likes_count(self):
         from src.api import PostLike
+
         return PostLike.query.filter_by(post_id=self.id).count()
 
     @staticmethod

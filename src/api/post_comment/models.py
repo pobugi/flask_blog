@@ -17,6 +17,10 @@ class PostComment(db.Model):
     updated = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     @staticmethod
+    def get(id):
+        return PostComment.query.get(id)
+
+    @staticmethod
     def create(description, post):
         post_comment = PostComment(
             description=description, post=post, owner=g.user, created=datetime.now(), updated=datetime.now()
@@ -24,6 +28,26 @@ class PostComment(db.Model):
         db.session.add(post_comment)
         db.session.commit()
         return post_comment
+
+    @staticmethod
+    def update(id, data_dict):
+        post_comment = PostComment.get(id)
+        post_comment.description = data_dict.get("description")
+        post_comment.updated = datetime.now()
+        db.session.commit()
+        return post_comment
+
+    @staticmethod
+    def delete(id):
+        post_comment = PostComment.get(id)
+        db.session.delete(post_comment)
+        db.session.commit()
+        return post_comment
+
+    @staticmethod
+    def get_all_by_post_id(post_id):
+        post_comments = PostComment.query.filter_by(post_id=post_id).order_by(PostComment.updated.desc()).all()
+        return post_comments
 
     @staticmethod
     def to_dict(obj):

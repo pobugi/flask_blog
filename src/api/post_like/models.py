@@ -29,9 +29,7 @@ class PostLike(db.Model):
 
     @staticmethod
     def create(post):
-        post_like = PostLike(
-            post=post, owner=g.user, created=datetime.now(), updated=datetime.now()
-        )
+        post_like = PostLike(post=post, owner=g.user, created=datetime.now(), updated=datetime.now())
         db.session.add(post_like)
         db.session.commit()
         return post_like

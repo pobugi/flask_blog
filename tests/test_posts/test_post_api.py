@@ -24,6 +24,3 @@ def test_get_all_posts(client):
     assert response.status_code == 200
     response_json = response.json
     assert isinstance(response_json, list)
-
-
-
